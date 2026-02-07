@@ -1,0 +1,171 @@
+import React from "react";
+import {
+  FaGithub,
+  FaLinkedin,
+  FaInstagram,
+  FaMapMarkerAlt,
+  FaPhoneAlt,
+  FaEnvelope,
+} from "react-icons/fa";
+
+import { motion } from "framer-motion";
+import {
+  FooterContainer,
+  FooterContent,
+  FooterSection,
+  LogoSection,
+  Logo,
+  LogoText,
+  Description,
+  SocialLinks,
+  SocialIcon,
+  QuickLinksSection,
+  SectionTitle,
+  LinksList,
+  LinkItem,
+  FooterLink,
+  ContactSection,
+  ContactItem,
+  ContactIcon,
+  ContactText,
+  BottomBar,
+  Copyright,
+} from "./Footer.styles";
+
+const Footer = ({ setActivePage, theme }) => {
+  const quickLinks = [
+    { id: "home", label: "Home" },
+    { id: "about", label: "About" },
+    { id: "projects", label: "Projects" },
+    { id: "resume", label: "Resume" },
+    { id: "contact", label: "Contact" },
+  ];
+
+  const socialLinks = [
+    {
+      icon: <FaGithub />,
+      url: "https://github.com/Dileep-025",
+      label: "GitHub",
+    },
+    {
+      icon: <FaLinkedin />,
+      url: "https://www.linkedin.com/in/dileep-nandavarapu",
+      label: "LinkedIn",
+    },
+    {
+      icon: <FaInstagram />,
+      url: "https://www.instagram.com/dileep.nandavarapu?igsh=aWUyazluZG4wZXQ0",
+      label: "Instagram",
+    },
+  ];
+
+  const contactInfo = [
+    { icon: <FaMapMarkerAlt />, text: "Kanigiri, 523230", type: "location" },
+    { icon: <FaPhoneAlt />, text: "+91 8096348239", type: "phone" },
+    {
+      icon: <FaEnvelope />,
+      text: "dileepnandavarapu025@gmail.com",
+      type: "email",
+    },
+  ];
+
+  const containerVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        staggerChildren: 0.1,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.4 },
+    },
+  };
+
+  return (
+    <FooterContainer theme={theme}>
+      <FooterContent
+        as={motion.div}
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-100px" }}
+      >
+        <FooterSection as={motion.div} variants={itemVariants}>
+          <LogoSection>
+            <Logo theme={theme}>
+              <span>D</span>
+            </Logo>
+            <LogoText theme={theme}>Dileep's Portfolio</LogoText>
+          </LogoSection>
+          <Description theme={theme}>
+            Creative developer focused on building modern, responsive and
+            user-friendly web applications with attention to detail and
+            performance.
+          </Description>
+          <SocialLinks>
+            {socialLinks.map((social, index) => (
+              <SocialIcon
+                key={index}
+                as={motion.a}
+                href={social.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                theme={theme}
+                whileHover={{ scale: 1.2, y: -3 }}
+                whileTap={{ scale: 0.95 }}
+                aria-label={social.label}
+              >
+                {social.icon}
+              </SocialIcon>
+            ))}
+          </SocialLinks>
+        </FooterSection>
+
+        <QuickLinksSection as={motion.div} variants={itemVariants}>
+          <SectionTitle theme={theme}>Quick Links</SectionTitle>
+          <LinksList>
+            {quickLinks.map((link, index) => (
+              <LinkItem key={link.id} as={motion.li} whileHover={{ x: 5 }}>
+                <FooterLink
+                  theme={theme}
+                  onClick={() => setActivePage(link.id)}
+                >
+                  › {link.label}
+                </FooterLink>
+              </LinkItem>
+            ))}
+          </LinksList>
+        </QuickLinksSection>
+
+        <ContactSection as={motion.div} variants={itemVariants}>
+          <SectionTitle theme={theme}>Contact</SectionTitle>
+          <LinksList>
+            {contactInfo.map((info, index) => (
+              <ContactItem key={index} as={motion.li} whileHover={{ x: 5 }}>
+                <ContactIcon>{info.icon}</ContactIcon>
+                <ContactText theme={theme}>{info.text}</ContactText>
+              </ContactItem>
+            ))}
+          </LinksList>
+        </ContactSection>
+      </FooterContent>
+
+      <BottomBar theme={theme}>
+        <Copyright theme={theme}>
+          © 2025 Dileep's Portfolio. All rights reserved.
+        </Copyright>
+      </BottomBar>
+    </FooterContainer>
+  );
+};
+
+export default Footer;
